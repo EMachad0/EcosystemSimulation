@@ -7,9 +7,10 @@ namespace Managers
     {
         public static TimeManager instance;
     
-        public int maxTime;
-        public float time;
-        public float relativeTime;
+        public float startTime;
+        public int dayDuration;
+        
+        private float _time;
 
         public static Action onDayStart;
     
@@ -19,13 +20,16 @@ namespace Managers
             instance = this;
         }
 
+        private void Start() => _time = startTime;
+
         private void Update()
         {
-            time += Time.deltaTime;
-            relativeTime = time / maxTime;
-            if (time < maxTime) return;
+            _time += UnityEngine.Time.deltaTime;
+            if (_time < dayDuration) return;
             onDayStart?.Invoke();
-            time %= maxTime;
+            _time %= dayDuration;
         }
+
+        public float Time => _time / dayDuration;
     }
 }

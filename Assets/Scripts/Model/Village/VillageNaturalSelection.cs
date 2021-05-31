@@ -43,7 +43,7 @@ namespace Model.Village
                     var p2 = transform.GetChild(i2).gameObject;
                     
                     var son = CreatureSpawnManager.instance.Reproduce(p1, p2);
-                    son.transform.SetParent(transform);
+                    son.GetComponent<CreatureVillageSystem>().EnterVillage(gameObject);
                 }
             }
         }

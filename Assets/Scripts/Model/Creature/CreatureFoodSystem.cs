@@ -16,6 +16,8 @@ namespace Model.Creature
             _fov = GetComponent<CreatureFieldOfView>();
         }
 
+        private void Start() => FoodTaken = foodTaken;
+
         private void OnCollisionEnter2D(Collision2D other)
         {
             if (other.gameObject.layer != LayerMask.NameToLayer("Food")) return;

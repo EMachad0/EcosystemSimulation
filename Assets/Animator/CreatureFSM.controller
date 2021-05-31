@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roamInterval: 5
-  roamDistance: 100
+  roamDistance: 20
 --- !u!114 &-7663780344127911904
 MonoBehaviour:
   m_ObjectHideFlags: 1

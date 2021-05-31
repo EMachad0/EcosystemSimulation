@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Abstract;
 using UnityEngine;
 
@@ -53,7 +54,8 @@ namespace Managers.InputManager
 
         private void SelectionCheck()
         {
-            foreach (var selectable in selectedObjects) selectable.SelectEnd();
+            foreach (var selectable in selectedObjects.Where(selectable => selectable))
+                selectable.SelectEnd();
             selectedObjects.Clear();
             var rayHit = Physics2D.GetRayIntersection(mainCamera.ScreenPointToRay(Input.mousePosition), Mathf.Infinity, selectablesMask);
             if (rayHit.transform is null) return;

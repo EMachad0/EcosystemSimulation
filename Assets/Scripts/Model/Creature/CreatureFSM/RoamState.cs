@@ -28,21 +28,23 @@ namespace Model.Creature.CreatureFSM
             _movement.LookAtTarget();
         }
 
-        private void GetRandomTarget()
-        {
-            _movement.target = Random.onUnitSphere.normalized * roamDistance + gameObject.transform.position;
-        }
-
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             _movement.StopCoroutine(_coroutine);
+        }
+
+        private Vector2 GetRandomVector()
+        {
+            var dir = (gameObject.transform.position - gameObject.transform.parent.position).normalized;
+            var angle = Random.Range(-90f, 90f);
+            return Utils.RotateVector(dir, angle) * roamDistance + (Vector2) gameObject.transform.position;
         }
 
         private IEnumerator GetRandomTarget(float delay)
         {
             while (true)
             {
-                _movement.target = Random.onUnitSphere.normalized * roamDistance + gameObject.transform.position;
+                _movement.target = GetRandomVector();
                 yield return new WaitForSeconds(delay);
             }
         }

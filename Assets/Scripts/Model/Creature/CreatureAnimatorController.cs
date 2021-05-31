@@ -23,7 +23,7 @@ namespace Model.Creature
 
         private void Update()
         {
-            _animator.SetFloat(DayTime, TimeManager.instance.relativeTime);
+            _animator.SetFloat(DayTime, TimeManager.instance.Time);
             _animator.SetInteger(FoodTaken, _foodSystem.FoodTaken);
             _animator.SetBool(SeeingFood, _foodSystem.IsSeeingFood());
             _animator.SetBool(Moving, _movement.IsMoving());

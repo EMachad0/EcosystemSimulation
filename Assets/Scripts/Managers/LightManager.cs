@@ -6,14 +6,15 @@ namespace Managers
     [ExecuteAlways]
     public class LightManager : MonoBehaviour
     {
-        [Range(0, 1)] public float time;
+        [Header("Editor")]
+        [Range(0, 1)] public float editorTime;
+
         public Light2D light2d;
         public Gradient ambientColor;
 
         private void Update()
         {
-            if (!Application.isPlaying) UpdateLighting(time);
-            else UpdateLighting(TimeManager.instance.time / TimeManager.instance.maxTime);
+            UpdateLighting(!Application.isPlaying ? editorTime : TimeManager.instance.Time);
         }
     
         private void UpdateLighting(float timePercent)

@@ -23,6 +23,7 @@ namespace Model.Creature
         public void EnterVillage(GameObject village)
         {
             gameObject.SetActive(false);
+            gameObject.transform.SetParent(village.transform);
             transform.position = village.transform.position;
         }
 

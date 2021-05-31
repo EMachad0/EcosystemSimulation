@@ -13,6 +13,7 @@ namespace Model.Village
 
         [Header("Daily Spawns")]
         public float spawnRange;
+        public int spawnPerFrame;
         public LayerMask spawnColliders;
 
         private VillageStats _stats;
@@ -39,26 +40,25 @@ namespace Model.Village
         private void OnDayStart()
         {
             _stats.NewEntries();
+            if (transform.childCount == 0) return;
             _naturalSelection.Reproduce();
+            StartCoroutine(SpawnCreatures());
+        }
 
-            for (var i = transform.childCount - 1; i >= 0; i--)
+        private IEnumerator SpawnCreatures()
+        {
+            for (var i = 0; i < transform.childCount; i++)
             {
                 var o = transform.GetChild(i).gameObject;
-                StartCoroutine(SpawnCreature(o));
+                if (o.activeSelf) continue;
+                SpawnCreature(o);
+                if (i != 0 && i % spawnPerFrame == 0) yield return null;
             }
         }
 
-        private IEnumerator SpawnCreature(GameObject obj)
+        private void SpawnCreature(GameObject obj)
         {
-            var range = spawnRange / 2;
-            Vector3 pos;
-            do
-            {
-                pos = new Vector3(Random.Range(-range, range), Random.Range(-range, range), 0) + transform.position;
-                var overlap = Physics2D.OverlapBox(pos, obj.transform.localScale, 0, spawnColliders);
-                if (overlap is null) break;
-                yield return null;
-            } while (true);
+            var pos = (Vector3) Random.insideUnitCircle * spawnRange;
             obj.GetComponent<CreatureVillageSystem>().ExitVillage(pos);
         }
     }

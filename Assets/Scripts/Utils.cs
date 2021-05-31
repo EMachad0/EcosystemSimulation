@@ -1,4 +1,6 @@
-﻿public static class Utils
+﻿using UnityEngine;
+
+public static class Utils
 {
     public static int BinarySearch(int[] v, int k)
     {
@@ -14,5 +16,13 @@
             else esq = mid + 1;
         }
         return r;
+    }
+
+    public static Vector2 RotateVector(Vector2 v, float angle)
+    {
+        angle *= Mathf.Deg2Rad;
+        var x = v.x * Mathf.Cos(angle) - v.y * Mathf.Sin(angle);
+        var y = v.x * Mathf.Sin(angle) + v.y * Mathf.Cos(angle);
+        return new Vector2(x, y);
     }
 }
